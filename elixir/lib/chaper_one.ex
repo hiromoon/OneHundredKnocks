@@ -63,4 +63,21 @@ defmodule ChapterOne do
     |> listToMap
     |> toShortKey
   end
+
+  defp pick_word(list, range) do
+    Enum.map(range, fn(x) -> {head, tail} = List.pop_at(list, x); head end)
+  end
+
+  def ngram_word(len, str) do
+    words = str |> parseToWord
+    ranges = Enum.map(0..(length(words)-1), fn(x) -> x..(x + len - 1) end)
+    Enum.map(ranges, fn(x) -> pick_word(words, x) end)
+    |> Enum.drop(-1)
+  end
+
+  def ngram_char(len, str) do
+    ranges = Enum.map(0..(String.length(str)-1), fn(x) -> x..(x + len - 1) end)
+    Enum.map(ranges, fn(x) -> String.slice(str, x) end)
+    |> Enum.drop(-1)
+  end
 end

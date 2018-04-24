@@ -43,4 +43,12 @@ defmodule ChapterOneTest do
     }
     assert ChapterOne.elements(target) == ans
   end
+
+  test "05_ngram" do
+    target = "I am an NLPer"
+    ans_word = [["I", "am"], ["am", "an"], ["an", "NLPer"]]
+    ans_char = ["I ", " a", "am", "m ", " a", "an", "n ", " N", "NL", "LP", "Pe", "er"]
+    assert ChapterOne.ngram_word(2, target) == ans_word
+    assert ChapterOne.ngram_char(2, target) == ans_char
+  end
 end
