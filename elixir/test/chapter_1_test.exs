@@ -47,8 +47,28 @@ defmodule ChapterOneTest do
   test "05_ngram" do
     target = "I am an NLPer"
     ans_word = [["I", "am"], ["am", "an"], ["an", "NLPer"]]
-    ans_char = ["I ", " a", "am", "m ", " a", "an", "n ", " N", "NL", "LP", "Pe", "er"]
+    ans_char = ["I ", " a", "am", "m ", "an", "n ", " N", "NL", "LP", "Pe", "er"]
     assert ChapterOne.ngram_word(2, target) == ans_word
     assert ChapterOne.ngram_char(2, target) == ans_char
+  end
+
+  test "06_set" do
+    x_ans = ["pa", "ar", "ra", "ap", "ad", "di", "is", "se"]
+    y_ans = ["pa", "ar", "ra", "ag", "gr", "ap", "ph"]
+    sum_ans = ["ad", "ag", "ap", "ar", "di", "gr", "is", "pa", "ph", "ra", "se"]
+    mul_ans = ["ap", "ar", "pa", "ra"]
+    sub_ans = ["ad", "di", "is", "se"]
+
+    x = ChapterOne.ngram_char(2, "paraparaparadise")
+    y =  ChapterOne.ngram_char(2, "paragraph")
+
+    assert x == x_ans
+    assert y == y_ans
+
+    assert ChapterOne.set_sum(x, y) == sum_ans
+    assert ChapterOne.set_mul(x, y) == mul_ans
+    assert ChapterOne.set_sub(x, y) == sub_ans
+    assert ChapterOne.check_se(x) == true
+    assert ChapterOne.check_se(y) == false
   end
 end

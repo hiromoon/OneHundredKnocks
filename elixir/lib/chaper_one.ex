@@ -65,7 +65,7 @@ defmodule ChapterOne do
   end
 
   defp pick_word(list, range) do
-    Enum.map(range, fn(x) -> {head, tail} = List.pop_at(list, x); head end)
+    Enum.map(range, fn(x) -> {head, _} = List.pop_at(list, x); head end)
   end
 
   def ngram_word(len, str) do
@@ -79,5 +79,28 @@ defmodule ChapterOne do
     ranges = Enum.map(0..(String.length(str)-1), fn(x) -> x..(x + len - 1) end)
     Enum.map(ranges, fn(x) -> String.slice(str, x) end)
     |> Enum.drop(-1)
+    |> Enum.uniq
+  end
+
+  def set_sum(x, y) do
+    x++y |> Enum.uniq |> Enum.sort
+  end
+
+  def set_mul(x, y) do 
+    Enum.reduce(x, [], fn (e, acc) ->
+      case Enum.member?(y, e) do
+        true -> [e | acc]
+        false -> acc
+      end
+    end)
+    |> Enum.sort
+  end
+
+  def set_sub(x, y) do
+    x--y |> Enum.uniq |> Enum.sort
+  end
+
+  def check_se(set) do
+    Enum.member?(set, "se")
   end
 end
